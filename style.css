@@ -1,0 +1,377 @@
+/* basic style */
+*{margin: 0; padding: 0; box-sizing: border-box;}
+a{color: #020202; text-decoration: none;}
+ul,li{list-style: none;}
+html, body{
+  overflow-x: hidden;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+/* 배경이미지 */
+body{
+  background: url(./image/bg-tv.jpg) no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* parallax_cont */
+#parallax_cont{width: 100%;}
+.parallax_item{
+    width: 100%;
+    height: 100vh;
+    text-align: left;
+    margin-top: 100px;
+}
+
+/* nav */
+#parallax_nav{
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  z-index: 1000;
+}
+#parallax_nav ul{display: flex;}
+#parallax_nav li a{
+  position: relative;
+  display: block;
+  padding: 10px 20px;
+  border: 1px solid #000;
+  text-decoration: none;
+  color: #000;
+  font-weight: 600;
+  background: #fff;
+  overflow: hidden; 
+}
+#parallax_nav li:not(:first-child) a{border-left: none;}
+#parallax_nav li a span{
+  position: relative;
+  z-index: 2;
+}
+
+/* hover용 ::after (밑에서 위로 주황 올라옴) */
+#parallax_nav li a::after{
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%;
+  height: 0%;
+  background: #ff6308;
+  transition: height 0.3s ease;
+  z-index: 1;
+}
+#parallax_nav li a:hover::after{height: 100%;}
+#parallax_nav li a:hover{color: #fff;}
+
+/* active용 ::before (위에서 아래로 검정 내려옴) */
+#parallax_nav li a::before{
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 0%;
+  background: #000;
+  transition: height 0.3s ease;
+  z-index: 1;
+}
+#parallax_nav li a.active::before{height: 100%;}
+#parallax_nav li a.active{
+  color: #000;
+  transition: color 0.3s ease;
+}
+#parallax_nav li a.active:not(:hover){color: #fff;}
+
+/* section1 */
+.project{
+  display: block;
+  color: #fff;
+  line-height: 1;
+  overflow: hidden;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease;
+  cursor: pointer;
+  width: 100%;
+  padding: 0 20px;
+  position: relative;
+}
+.project:hover{
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+}
+
+/* 프로젝트 제목 컨테이너 */
+.project-title{
+  position: relative;
+  overflow: hidden;
+  height: 90px; /* h3의 높이와 동일하게 설정 */
+}
+
+/* 원본 제목 (기본 상태) */
+.title-original{
+  font-family: "Source Sans 3", sans-serif;
+  font-weight: 500;
+  font-size: 90px;
+  line-height: 1;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transform: translateY(0);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 호버 시 제목 (아래에서 위로 올라옴) */
+.title-hover{
+  font-family: "Source Serif 4", serif;
+  font-weight: 600;
+  font-size: 90px;
+  line-height: 1;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 호버 효과 */
+.project:hover .title-original{
+  transform: translateY(-100%);
+}
+
+.project:hover .title-hover{
+  transform: translateY(0);
+}
+
+/* 프로젝트 설명 텍스트 */
+.project p{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 30px;
+  font-weight: 500;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.project:hover p{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project a{display: none;}
+
+/* 프로젝트 상세 페이지 */
+.project-detail{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: transparent;
+  z-index: 2000;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.project-detail.show{
+  display: block;
+  opacity: 1;
+}
+
+/* 애니메이션 클래스들 */
+.project-detail.closing .project-detail-left{
+  transform: translateX(-100%);
+  transition: transform 0.6s ease-in;
+}
+
+.project-detail.closing .project-detail-header,
+.project-detail.closing .close-button{
+  transform: translateY(-100%);
+  transition: transform 0.6s ease-in;
+}
+
+.project-detail.closing .project-detail-navigation{
+  transform: translateY(270%);
+  transition: transform 0.6s ease-in;
+}
+
+/* launch-button만 별도 애니메이션 */
+.project-detail.closing .launch-button{
+  transform: translateY(50px);
+  opacity: 0;
+  transition: all 0.6s ease-in;
+}
+
+/* 프로젝트 상세 페이지가 열렸을 때 네비게이션 숨기기 */
+.project-detail.show #parallax_nav{
+  display: none;
+}
+
+body.project-detail-open #parallax_nav{
+  display: none;
+}
+
+.project-detail-content{
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+}
+
+.project-detail-left{
+  flex: 1.5;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-image-placeholder{
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #ccc;
+}
+
+.project-detail-right{
+  flex: 1;
+  background: transparent;
+  color: #fff;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.project-detail-header h3{
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 80px;
+  font-weight: 600;
+  line-height: 1;
+  margin: 0 0 30px 0;
+}
+
+.project-info{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 0 40px 0;
+}
+
+.info-year{
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+}
+
+.info-category{
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+}
+
+.launch-button{
+  display: inline-block;
+  padding: 15px 30px;
+  border: none;
+  color: #fff;
+  text-decoration: none;
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.7s ease;
+  background: transparent;
+}
+
+.launch-button:hover{
+  background: #fff;
+  color: #000;
+  border-radius: 50px;
+}
+
+.project-detail-navigation{
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-button{
+  background: transparent;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.7s ease;
+}
+
+.nav-button:hover{
+  background: #fff;
+  color: #000;
+  border-radius: 50px;
+}
+
+.close-button{
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 40px;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.close-button:hover{
+  background: #fff;
+  color: #000;
+  border-radius: 50%;
+}
+
+
+
+@media (max-width: 768px) {
+  .project-title {
+    height: 12vw; 
+  }
+  .title-original, .title-hover {
+    font-size: 10vw;
+    line-height: 1.1;
+  }
+  .project p,
+  .project-detail-header,
+  .project-detail-navigation {
+    display: none;
+  }
+  .close-button {
+    font-size: 8vw;
+    width: 10vw;
+    height: 10vw;
+  }
+  .project-detail-left{
+    
+  }
+}
