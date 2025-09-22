@@ -86,10 +86,17 @@ function showProjectDetail() {
     detailLaunch.href = link;
     detailLaunch.setAttribute("target", "_blank");
 
-    // 모달 열기
-    projectDetail.classList.add('show');
-    document.body.classList.add('project-detail-open');
-    document.body.style.overflow = 'hidden';
+    // 모달 열기(전환 애니메이션 지원)
+    projectDetail.classList.remove('show');
+    // 닫힘 애니메이션이 끝난 뒤 show 추가 (400ms)
+    setTimeout(() => {
+        projectDetail.classList.remove('closing');
+        setTimeout(() => {
+            projectDetail.classList.add('show');
+            document.body.classList.add('project-detail-open');
+            document.body.style.overflow = 'hidden';
+        }, 10); // .closing 제거 후 약간의 딜레이로 show
+    }, 300);
 }
 
 // 프로젝트 상세 페이지 숨기기
@@ -104,14 +111,22 @@ function hideProjectDetail() {
 
 // 이전 프로젝트
 function showPrevProject() {
-    currentProjectIndex = currentProjectIndex > 0 ? currentProjectIndex - 1 : projectEls.length - 1;
-    showProjectDetail();
+    // 상세페이지 페이드 아웃
+    projectDetail.classList.add('closing');
+    setTimeout(() => {
+        currentProjectIndex = currentProjectIndex > 0 ? currentProjectIndex - 1 : projectEls.length - 1;
+        showProjectDetail(true); // true: 애니메이션으로 등장
+    }, 400); // 닫힘 애니메이션 시간과 맞춤
 }
 
 // 다음 프로젝트
 function showNextProject() {
-    currentProjectIndex = currentProjectIndex < projectEls.length - 1 ? currentProjectIndex + 1 : 0;
-    showProjectDetail();
+    // 상세페이지 페이드 아웃
+    projectDetail.classList.add('closing');
+    setTimeout(() => {
+        currentProjectIndex = currentProjectIndex < projectEls.length - 1 ? currentProjectIndex + 1 : 0;
+        showProjectDetail(true);
+    }, 400);
 }
 
 // 이벤트 리스너
@@ -124,4 +139,14 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && projectDetail.classList.contains('show')) {
         hideProjectDetail();
     }
+});
+
+// 모바일 nav-button 클릭 후 포커스 잔상 방지 (약간의 딜레이로 자연스럽게)
+document.querySelectorAll('.nav-button').forEach(btn => {
+    btn.addEventListener('touchend', function() {
+        setTimeout(() => this.blur(), 100);
+    });
+    btn.addEventListener('mouseup', function() {
+        setTimeout(() => this.blur(), 100);
+    });
 });

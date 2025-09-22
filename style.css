@@ -6,6 +6,7 @@ html, body{
   overflow-x: hidden;
   font-family: "Noto Sans KR", sans-serif;
 }
+#section1, #project-detail{font-family: "Source Sans 3", sans-serif;}
 
 /* 배경이미지 */
 body{
@@ -97,17 +98,14 @@ body{
   border-top: 1px solid #fff;
   border-bottom: 1px solid #fff;
 }
-
-/* 프로젝트 제목 컨테이너 */
 .project-title{
   position: relative;
   overflow: hidden;
-  height: 90px; /* h3의 높이와 동일하게 설정 */
+  height: 90px;
 }
 
-/* 원본 제목 (기본 상태) */
+/* 제목(기본 상태) */
 .title-original{
-  font-family: "Source Sans 3", sans-serif;
   font-weight: 500;
   font-size: 90px;
   line-height: 1;
@@ -120,7 +118,7 @@ body{
   transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* 호버 시 제목 (아래에서 위로 올라옴) */
+/* 제목(호버 상태) */
 .title-hover{
   font-family: "Source Serif 4", serif;
   font-weight: 600;
@@ -134,22 +132,14 @@ body{
   transform: translateY(100%);
   transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
+.project:hover .title-original{transform: translateY(-100%);}
+.project:hover .title-hover{transform: translateY(0);}
 
-/* 호버 효과 */
-.project:hover .title-original{
-  transform: translateY(-100%);
-}
-
-.project:hover .title-hover{
-  transform: translateY(0);
-}
-
-/* 프로젝트 설명 텍스트 */
+/* 제목 작은 글자 */
 .project p{
   position: absolute;
   top: 20px;
   right: 20px;
-  font-family: "Source Sans 3", sans-serif;
   font-size: 30px;
   font-weight: 500;
   color: #fff;
@@ -160,12 +150,10 @@ body{
   white-space: nowrap;
   z-index: 10;
 }
-
 .project:hover p{
   opacity: 1;
   transform: translateY(0);
 }
-
 .project a{display: none;}
 
 /* 프로젝트 상세 페이지 */
@@ -181,52 +169,40 @@ body{
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .project-detail.show{
   display: block;
   opacity: 1;
 }
 
-/* 애니메이션 클래스들 */
+/* 애니메이션 */
 .project-detail.closing .project-detail-left{
   transform: translateX(-100%);
   transition: transform 0.6s ease-in;
 }
-
 .project-detail.closing .project-detail-header,
 .project-detail.closing .close-button{
   transform: translateY(-100%);
   transition: transform 0.6s ease-in;
 }
-
 .project-detail.closing .project-detail-navigation{
   transform: translateY(270%);
   transition: transform 0.6s ease-in;
 }
-
-/* launch-button만 별도 애니메이션 */
 .project-detail.closing .launch-button{
   transform: translateY(50px);
   opacity: 0;
   transition: all 0.6s ease-in;
 }
-
-/* 프로젝트 상세 페이지가 열렸을 때 네비게이션 숨기기 */
-.project-detail.show #parallax_nav{
+.project-detail.show #parallax_nav,
+.project-detail-open #parallax_nav{
   display: none;
 }
-
-body.project-detail-open #parallax_nav{
-  display: none;
-}
-
 .project-detail-content{
   display: flex;
   height: 100vh;
   width: 100vw;
   margin: 0;
 }
-
 .project-detail-left{
   flex: 1.5;
   background: #fff;
@@ -234,7 +210,6 @@ body.project-detail-open #parallax_nav{
   align-items: center;
   justify-content: center;
 }
-
 .project-image-placeholder{
   width: 100%;
   height: 100%;
@@ -245,7 +220,6 @@ body.project-detail-open #parallax_nav{
   font-size: 24px;
   color: #ccc;
 }
-
 .project-detail-right{
   flex: 1;
   background: transparent;
@@ -256,78 +230,63 @@ body.project-detail-open #parallax_nav{
   justify-content: space-between;
   position: relative;
 }
-
 .project-detail-header h3{
-  font-family: "Source Sans 3", sans-serif;
   font-size: 80px;
   font-weight: 600;
   line-height: 1;
   margin: 0 0 30px 0;
 }
-
 .project-info{
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin: 0 0 40px 0;
 }
-
 .info-year{
-  font-family: "Source Sans 3", sans-serif;
   font-size: 18px;
   font-weight: 400;
   color: #fff;
 }
-
 .info-category{
-  font-family: "Source Sans 3", sans-serif;
   font-size: 18px;
   font-weight: 400;
   color: #fff;
 }
-
 .launch-button{
   display: inline-block;
   padding: 15px 30px;
   border: none;
   color: #fff;
   text-decoration: none;
-  font-family: "Source Sans 3", sans-serif;
   font-size: 16px;
   font-weight: 500;
   transition: all 0.7s ease;
   background: transparent;
 }
-
 .launch-button:hover{
   background: #fff;
   color: #000;
   border-radius: 50px;
 }
-
 .project-detail-navigation{
   display: flex;
   gap: 20px;
   align-items: center;
 }
-
 .nav-button{
   background: transparent;
   border: none;
   color: #fff;
   padding: 10px 20px;
-  font-family: "Source Sans 3", sans-serif;
   font-size: 14px;
   cursor: pointer;
   transition: all 0.7s ease;
 }
-
 .nav-button:hover{
   background: #fff;
   color: #000;
   border-radius: 50px;
 }
-
 .close-button{
   position: absolute;
   top: 30px;
@@ -344,7 +303,6 @@ body.project-detail-open #parallax_nav{
   justify-content: center;
   transition: all 0.3s ease;
 }
-
 .close-button:hover{
   background: #fff;
   color: #000;
@@ -352,26 +310,134 @@ body.project-detail-open #parallax_nav{
 }
 
 
-
-@media (max-width: 768px) {
-  .project-title {
-    height: 12vw; 
+/* 모바일 */
+@media (max-width: 768px){
+  .project-detail.closing{
+    transform: translateX(-100vw) !important;
+    pointer-events: none !important;
+    transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
   }
-  .title-original, .title-hover {
+  .project-detail{
+    display: block !important;
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: #fff;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-100vw);
+    transition: transform 0.5s cubic-bezier(0.4,0.7,0.4,1), opacity 0.4s cubic-bezier(0.4,0.7,0.4,1);
+  }
+  .project-detail.show{
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+  .project-detail,
+  .project-detail-content,
+  .project-detail-right{
+    background: #fff !important;
+  }
+  .project-title{height: 12vw;}
+  .title-original, .title-hover{
     font-size: 10vw;
     line-height: 1.1;
   }
-  .project p,
-  .project-detail-header,
-  .project-detail-navigation {
-    display: none;
-  }
-  .close-button {
+  .project p{display: none;}
+  .close-button{
     font-size: 8vw;
     width: 10vw;
     height: 10vw;
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 3200;
+    color: #fff;
+    background: rgba(0,0,0,0.7);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
   }
-  .project-detail-left{
-    
+  .close-button:hover{
+    background: #fff;
+    color: #000;
+  }
+  .project-detail-navigation{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    z-index: 3100;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    background: none;
+    pointer-events: auto;
+  }
+  .project-detail-navigation .nav-button{
+    background-color: #111 !important;
+    color: #fff !important;
+    padding: 14px 22px;
+    border-radius: 999px;
+    font-size: 3vw;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    border: none;
+    z-index: 3200;
+    opacity: 1;
+    display: inline-block;
+    transition: background 0.2s, color 0.2s;
+  }
+  .project-detail-navigation .nav-button:active,
+  .project-detail-navigation .nav-button:focus{
+    background: #fff !important;
+    color: #111 !important;
+    outline: none;
+  }
+  .project-detail-header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background: #111;
+    color: #fff;
+    z-index: 3100;
+    padding: 16px 20px 10px 20px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #222;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  }
+  .project-detail-header h3{
+    font-size: 7vw;
+    margin-bottom: 8px;
+  }
+  .project-info{
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin-bottom: 0;
+    font-size: 3.5vw;
+  }
+  .info-year, .info-category{
+    font-size: 3.5vw;
+    color: #fff;
+    background: #222;
+    border-radius: 8px;
+    padding: 2px 8px;
+  }
+  .launch-button{
+    font-size: 3.5vw;
+    padding: 8px 16px;
+    margin-top: 8px;
+    border-radius: 20px;
+    background: #222;
+    color: #fff;
+    display: inline-block;
+  }
+  .project-detail .project-detail-right{
+    padding-top: 90px;
+    padding-bottom: 110px;
   }
 }
