@@ -86,6 +86,15 @@ function showProjectDetail() {
     detailLaunch.href = link;
     detailLaunch.setAttribute("target", "_blank");
 
+    // 이미지
+    const imgSrc = projectEl.getAttribute('data-image');
+    const placeholder = document.querySelector('.project-image-placeholder');
+    if(imgSrc) {
+        placeholder.innerHTML = `<img src="${imgSrc}" alt="프로젝트 이미지" style="width:100%;height:100%;object-fit:cover;">`;
+    } else {
+        placeholder.innerHTML = '';
+    }
+
     // 모달 열기(전환 애니메이션 지원)
     projectDetail.classList.remove('show');
     // 닫힘 애니메이션이 끝난 뒤 show 추가 (400ms)
