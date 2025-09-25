@@ -320,12 +320,6 @@ body{
 
 /* 모바일 */
 @media (max-width: 768px){
-  html, body {
-    height: 100vh !important;
-    overflow: hidden !important;
-    position: fixed !important;
-    width: 100vw !important;
-  }
   .project-detail.closing{
     transform: translateX(-100vw) !important;
     pointer-events: none !important;
@@ -341,25 +335,6 @@ body{
     pointer-events: none;
     transform: translateX(-100vw);
     transition: transform 0.5s cubic-bezier(0.4,0.7,0.4,1), opacity 0.4s cubic-bezier(0.4,0.7,0.4,1);
-    overflow: hidden !important;
-  }
-  .project-detail-left {
-    width: 100vw !important;
-    height: calc(100vh - 150px) !important;
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-    display: block !important;
-    align-items: initial !important;
-    justify-content: initial !important;
-    flex: none !important;
-    margin-top: 150px;
-  }
-  .project-detail-content {
-    display: block !important;
-  }
-  .project-detail-content {
-    height: 100vh !important;
-    overflow: hidden !important;
   }
   .project-detail.show{
     opacity: 1;
@@ -370,12 +345,6 @@ body{
   .project-detail-content,
   .project-detail-right{
     background: #fff !important;
-  }
-  .project-detail-right {
-    height: 100vh !important;
-    overflow-y: auto !important;
-    padding-top: 90px;
-    padding-bottom: 110px;
   }
   .project-title{height: 12vw;}
   .title-original, .title-hover{
@@ -478,7 +447,5 @@ body{
   .project-detail .project-detail-right{
     padding-top: 90px;
     padding-bottom: 110px;
-    max-height: calc(100vh - 200px);
-    overflow-y: auto;
   }
 }
