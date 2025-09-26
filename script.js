@@ -50,9 +50,31 @@ const projectEls = document.querySelectorAll('.project');
 
 // 프로젝트 클릭 이벤트
 projectEls.forEach((project, index) => {
-    project.addEventListener('click', () => {
-        currentProjectIndex = index;
-        showProjectDetail();
+    project.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // 모바일 감지
+        const isMobile = window.innerWidth <= 768;
+        
+        if (isMobile) {
+            // 모바일에서는 hover 효과가 완료된 후 상세페이지 표시
+            project.classList.add('clicked');
+            project.style.pointerEvents = 'none';
+            
+            // hover 애니메이션 완료 후 상세페이지 표시 (0.2초 후)
+            setTimeout(() => {
+                currentProjectIndex = index;
+                showProjectDetail();
+            }, 200);
+        } else {
+            // 웹에서는 즉시 상세페이지 표시
+            project.classList.add('clicked');
+            project.style.pointerEvents = 'none';
+            
+            currentProjectIndex = index;
+            showProjectDetail();
+        }
     });
 });
 
@@ -96,16 +118,16 @@ function showProjectDetail() {
     }
 
     // 모달 열기(전환 애니메이션 지원)
-    projectDetail.classList.remove('show');
-    // 닫힘 애니메이션이 끝난 뒤 show 추가 (400ms)
+    projectDetail.classList.remove('show', 'closing');
+    projectDetail.style.display = 'block';
+    
+    // 브라우저가 display 변경을 인식할 수 있도록 약간의 딜레이
     setTimeout(() => {
-        projectDetail.classList.remove('closing');
-        setTimeout(() => {
-            projectDetail.classList.add('show');
-            document.body.classList.add('project-detail-open');
-            document.body.style.overflow = 'hidden';
-        }, 10); // .closing 제거 후 약간의 딜레이로 show
-    }, 300);
+        projectDetail.classList.add('show');
+        document.body.classList.add('project-detail-open');
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+    }, 10);
 }
 
 // 프로젝트 상세 페이지 숨기기
@@ -113,28 +135,63 @@ function hideProjectDetail() {
     projectDetail.classList.add('closing');
     setTimeout(() => {
         projectDetail.classList.remove('show', 'closing');
+        projectDetail.style.display = 'none';
         document.body.classList.remove('project-detail-open');
         document.body.style.overflow = 'auto';
+        document.documentElement.style.overflow = 'auto';
+        
+        // 클릭된 프로젝트 상태 복원
+        const clickedProject = document.querySelector('.project.clicked');
+        if (clickedProject) {
+            clickedProject.classList.remove('clicked');
+            clickedProject.style.pointerEvents = 'auto';
+        }
     }, 600);
 }
 
 // 이전 프로젝트
 function showPrevProject() {
-    // 상세페이지 페이드 아웃
+    // 상세페이지 왼쪽으로 사라지기
     projectDetail.classList.add('closing');
+    
     setTimeout(() => {
+        // 이전 클릭 상태 제거
+        const clickedProject = document.querySelector('.project.clicked');
+        if (clickedProject) {
+            clickedProject.classList.remove('clicked');
+            clickedProject.style.pointerEvents = 'auto';
+        }
+        
         currentProjectIndex = currentProjectIndex > 0 ? currentProjectIndex - 1 : projectEls.length - 1;
-        showProjectDetail(true); // true: 애니메이션으로 등장
-    }, 400); // 닫힘 애니메이션 시간과 맞춤
+        
+        // 왼쪽으로 사라진 후 오른쪽에서 나타나기
+        setTimeout(() => {
+            projectDetail.classList.remove('closing');
+            showProjectDetail();
+        }, 100);
+    }, 400);
 }
 
 // 다음 프로젝트
 function showNextProject() {
-    // 상세페이지 페이드 아웃
+    // 상세페이지 왼쪽으로 사라지기
     projectDetail.classList.add('closing');
+    
     setTimeout(() => {
+        // 이전 클릭 상태 제거
+        const clickedProject = document.querySelector('.project.clicked');
+        if (clickedProject) {
+            clickedProject.classList.remove('clicked');
+            clickedProject.style.pointerEvents = 'auto';
+        }
+        
         currentProjectIndex = currentProjectIndex < projectEls.length - 1 ? currentProjectIndex + 1 : 0;
-        showProjectDetail(true);
+        
+        // 왼쪽으로 사라진 후 오른쪽에서 나타나기
+        setTimeout(() => {
+            projectDetail.classList.remove('closing');
+            showProjectDetail();
+        }, 100);
     }, 400);
 }
 
