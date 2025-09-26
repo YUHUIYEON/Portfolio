@@ -256,6 +256,13 @@ body{
   opacity: 0;
   transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease;
 }
+
+/* 상세페이지가 열렸을 때 프로젝트 제목들 숨기기 (웹에서만) */
+.project-detail.show #section1 .project,
+.project-detail-open #section1 .project{
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
 .project-detail-content{
   display: flex;
   height: 100vh;
